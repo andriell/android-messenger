@@ -7,20 +7,24 @@ import android.view.View;
 import android.widget.EditText;
 
 public class CreateMessageActivity extends Activity {
+    private EditText textViewMessage;
+    private EditText textViewSubject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_message);
+        textViewMessage = (EditText) findViewById(R.id.message);
+        textViewSubject = (EditText) findViewById(R.id.subject);
     }
 
     public void onSendMessage(View view) {
-        EditText textView = (EditText) findViewById(R.id.message);
-        String s = textView.getText().toString();
+        String message = textViewMessage.getText().toString();
+        String subject = textViewSubject.getText().toString();
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
-        intent.putExtra(Intent.EXTRA_TEXT, s);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
         intent = Intent.createChooser(intent, getString(R.string.chooser));
         startActivity(intent);
     }
